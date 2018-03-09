@@ -9,11 +9,8 @@ BLECharacteristic *pCharacteristic;
 bool deviceConnected = false;
 RTC_DATA_ATTR bool goToSleep = false;
 
-// See the following for generating UUIDs:
-// https://www.uuidgenerator.net/
-
-#define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
-#define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+#define SERVICE_UUID        "13ac3d8a-714f-4cf3-adf8-9d9248119dbf"
+#define CHARACTERISTIC_UUID "f5423bee-3d9e-4217-a86a-9ac68e51a036"
 
 
 class MyServerCallbacks: public BLEServerCallbacks {
