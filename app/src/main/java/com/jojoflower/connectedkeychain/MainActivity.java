@@ -41,17 +41,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        peripheralTextView = (TextView) findViewById(R.id.PeripheralTextView);
-        peripheralTextView.setMovementMethod(new ScrollingMovementMethod());
+        peripheralTextView = findViewById(R.id.PeripheralTextView);
 
-        startScanningButton = (Button) findViewById(R.id.StartScanButton);
+        startScanningButton = findViewById(R.id.StartScanButton);
         startScanningButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startScanning();
             }
         });
 
-        stopScanningButton = (Button) findViewById(R.id.StopScanButton);
+        stopScanningButton = findViewById(R.id.StopScanButton);
         stopScanningButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopScanning();
@@ -89,13 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private ScanCallback leScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
-            peripheralTextView.append("Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
-
-            // auto scroll for text view
-            final int scrollAmount = peripheralTextView.getLayout().getLineTop(peripheralTextView.getLineCount()) - peripheralTextView.getHeight();
-            // if there is no need to scroll, scrollAmount will be <=0
-            if (scrollAmount > 0)
-                peripheralTextView.scrollTo(0, scrollAmount);
+            peripheralTextView.setText("Device Name: " + result.getDevice().getName() + "\n RSSI: " + result.getRssi() + "\n");
         }
     };
 
