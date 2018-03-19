@@ -3,7 +3,6 @@ package com.jojoflower.connectedkeychain;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -12,45 +11,60 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
     BluetoothManager btManager;
     BluetoothAdapter btAdapter;
     BluetoothLeScanner btScanner;
+    ImageView imageView2;
     Button startScanningButton;
     Button stopScanningButton;
+    Bitmap Barrelow;
+    Bitmap Barremedium;
+    Bitmap Barremax;
     TextView peripheralTextView;
+    MediaPlayer biplow;
+    MediaPlayer bipmedium;
+    MediaPlayer biphigh;
     private final static int REQUEST_ENABLE_BT = 1;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        peripheralTextView = findViewById(R.id.PeripheralTextView);
-
-        startScanningButton = findViewById(R.id.StartScanButton);
+        biplow = MediaPlayer.create(MainActivity.this, R.raw.biplow);
+        bipmedium = MediaPlayer.create(MainActivity.this, R.raw.bipmedium);
+        biphigh = MediaPlayer.create(MainActivity.this, R.raw.biphigh);
+        peripheralTextView = (TextView) findViewById(R.id.PeripheralTextView);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
+        peripheralTextView.setMovementMethod(new ScrollingMovementMethod());
+        Barrelow = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.barrelow);
+        Log.i("tag", String.valueOf(Barrelow));
+        Barremedium = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.barremedium);
+        Barremax = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.barremax);
+        imageView2.setImageBitmap(Barremax);
+        startScanningButton = (Button) findViewById(R.id.StartScanButton);
         startScanningButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startScanning();
             }
         });
 
-        stopScanningButton = findViewById(R.id.StopScanButton);
+        stopScanningButton = (Button) findViewById(R.id.StopScanButton);
         stopScanningButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopScanning();
@@ -86,9 +100,46 @@ public class MainActivity extends AppCompatActivity {
 
     // Device scan callback.
     private ScanCallback leScanCallback = new ScanCallback() {
+
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
-            peripheralTextView.setText("Device Name: " + result.getDevice().getName() + "\n RSSI: " + result.getRssi() + "\n");
+
+                String nom = result.getDevice().getName();
+                peripheralTextView.setText("Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
+                if ((-85 > result.getRssi()) && biplow.isLooping() == false) {
+                    if (bipmedium.isLooping() == true) {
+                        bipmedium.setLooping(false);
+                        //bipmedium.stop();
+                    }
+                    if (biphigh.isLooping() == true) {
+                        biphigh.setLooping(false);
+                    }
+                    imageView2.setImageBitmap(Barrelow);
+                    biplow.setLooping(true);
+                    biplow.start();
+                }
+                if (-85 < result.getRssi() && result.getRssi() < -70 && bipmedium.isLooping() == false) {
+                    if (biplow.isLooping() == true) {
+                        biplow.setLooping(false);
+                    }
+                    if (biphigh.isLooping() == true) {
+                        biphigh.setLooping(false);
+                    }
+                    imageView2.setImageBitmap(Barremedium);
+                    bipmedium.setLooping(true);
+                    bipmedium.start();
+                }
+                if (-70 < result.getRssi() && !biphigh.isLooping()) {
+                    if (bipmedium.isLooping() == true) {
+                        bipmedium.setLooping(false);
+                    }
+                    if (biplow.isLooping() == true) {
+                        biplow.setLooping(false);
+                    }
+                    imageView2.setImageBitmap(Barremax);
+                    biphigh.setLooping(true);
+                    biphigh.start();
+                }
         }
     };
 
@@ -119,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startScanning() {
+
+
         System.out.println("start scanning");
         peripheralTextView.setText("");
         startScanningButton.setVisibility(View.INVISIBLE);
@@ -132,6 +185,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stopScanning() {
+        if (biplow.isLooping()==true) {
+            biplow.setLooping(false);
+            biplow.stop();
+        }
+
+        if (bipmedium.isLooping()==true) {
+            bipmedium.setLooping(false);
+            bipmedium.stop();
+        }
+        if (biphigh.isLooping()==true) {
+            biphigh.setLooping(false);
+            biphigh.stop();
+        }
         System.out.println("stopping scanning");
         peripheralTextView.append("Stopped Scanning");
         startScanningButton.setVisibility(View.VISIBLE);
