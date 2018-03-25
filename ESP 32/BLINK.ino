@@ -3,7 +3,7 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 #define uS_TO_S_FACTOR 1000000
-#define TIME_TO_SLEEP  2
+#define TIME_TO_SLEEP  25
 
 BLECharacteristic *pCharacteristic;
 bool deviceConnected = false;
@@ -77,5 +77,5 @@ void loop() {
   else{
     Serial.println("DEVICE CONNECTED");
   }
-  delay(2000);
+  delay(5000);
 }
