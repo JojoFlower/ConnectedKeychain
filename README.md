@@ -4,7 +4,7 @@ Find your keys when you lose them!
 
 Student project at CentraleSupélec Rennes (academic year 2017/2018). Made by 3 students:
 * Joel Nguesson, [joel.nguesson[magicsymbol]supelec.fr](mailto:joel.nguesson[magicsymbol]supelec.fr)
-* Eric Gastineau, [gabriel.masseran[magicsymbol]supelec.fr](mailto:eric.gastineau[magicsymbol]supelec.fr)
+* Eric Gastineau, [eric.gastineau[magicsymbol]supelec.fr](mailto:eric.gastineau[magicsymbol]supelec.fr)
 * Alexandre Lalanne, [alexandre.lalanne[magicsymbol]supelec.fr](mailto:alexandre.lalanne[magicsymbol]supelec.fr)
 
 ## Hardware
