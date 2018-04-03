@@ -1,5 +1,6 @@
 # BLINK: a Bluetooth Low Energy connected keychain
-This project help you to find your key when you lose them
+
+Find your keys when you lose them!
 
 Student project at CentraleSupélec Rennes (academic year 2017/2018). Made by 3 students:
 * Joel Nguesson, [joel.nguesson[magicsymbol]supelec.fr](mailto:joel.nguesson[magicsymbol]supelec.fr)
@@ -9,9 +10,18 @@ Student project at CentraleSupélec Rennes (academic year 2017/2018). Made by 3 
 ## Hardware
 * [Espressif ESP32S development board](https://www.elektor.fr/esp-32s-pinboard-breakout-modules)
 * CP210 USB to UART Bridge
-* 3.3 V battery (a higher voltage battery is fine too, but make sure to use a voltage regulator in order to output 3.3V)
+* 3.3V battery (a higher voltage battery is fine too, but make sure to use a voltage regulator in order to output 3.3V)
+* Android smartphone
 
-### TODO
+## Connections
+
+## Software layer
+
+### Keychain: ESP32 board
+
+### Android app
+
+## TODO
 - complete readme
 - ESP32 + UART USB wiring
 - install instructions
