@@ -1,6 +1,7 @@
 # BLINK: a Bluetooth Low Energy connected keychain
 
 Find your keys when you lose them!
+
 IoT project to find a small connected device by Bluetooth Low Energy using an Mobile Application.
 
 Student project at CentraleSupélec Rennes (academic year 2017/2018). Made by 3 students:
